@@ -12,7 +12,51 @@ let canvasElem = document.getElementById('chart')
  */
 function renderChart() {
   // Instantiate a new AppState
-  let appState = new App();
+  let state = new AppState();
+  state.loadItems();
+
+  let productNames = [];
+  let productVotes = [];
+  let productViews = [];
+
+  for (let i = 0; i < state.allProducts.length; i++) {
+    productNames.push(state.allProducts[i].name);
+    productVotes.push(state.allProducts[i].timesClicked);
+    productViews.push(state.allProducts[i].timesShown);
+  }
+
+  let chartObj = {
+    type: 'bar',
+    data: {
+      labels: productNames,
+      datasets: [{
+        label: '# of Votes',
+        data: productVotes,
+        borderWidth: 1,
+        backgroundColor: 'purple',
+        color: 'black',
+      },
+      {
+        label: '# of Views',
+        data: productViews,
+        borderWidth: 1,
+        backgroundColor: 'green',
+        color: 'black',
+      }
+      ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  };
+
+  new Chart(canvasElem, chartObj);
+
+  
 
 
 
